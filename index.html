@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--This Website is not meant for actual viewing. It is meant to be fetched for random quotes I use in other projects, but I couldn't leave a website without some stars :D -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quoterson</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0turn);
+            } 50% {
+                transform: translate(-50%, -50%) rotate(0.5turn);
+            } 100% {
+                transform: translate(-50%, -50%) rotate(1turn);
+            }
+        }
+
+        #starWrapper {
+            width: 144vmax;
+            height: 144vmax;
+            position: absolute;
+            left: 50vw;
+            top: 50vh;
+            transform-origin: center;
+            animation: spin 600s infinite linear
+            
+        }
+
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background-color: white;
+            animation: twinkle 4.5s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        h3, h1, h2 {
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            z-index: 2;
+            position: absolute;
+            width: 100%;
+        }
+
+        h1 {
+            top: 50vh;
+            transform: translateY(-50%);
+            font-size: 4em;
+            margin-top: 0;
+        }
+
+        h3 {
+            top: 0;
+            font-size: 2em;
+        }
+
+        h2 {
+            top: 90vh;
+            font-size: 2.5em;
+        }
+
+    </style>
+</head>
+<body>
+    <h3>Quote of the day:</h3>
+    <h1 id="quote">"My Quote goes here"</h1>
+    <h2 id="info">Marco Gomez, 04/01/2024</h2>
+
+    <script>
+        const numStars = 150;
+        const starWrapper = document.createElement('div');
+        starWrapper.id = "starWrapper";
+        document.body.appendChild(starWrapper)
+
+        const max = window.innerHeight > window.innerWidth ? window.innerHeight : window.innerWidth
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            starWrapper.appendChild(star);
+
+            const size = Math.random() * 3 + 1;
+            const xPos = Math.random() * max * 1.44;
+            const yPos = Math.random() * max * 1.44;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${xPos}px`;
+            star.style.top = `${yPos}px`;
+
+            const delay = Math.random() * 2;
+            star.style.animationDelay = `${delay}s`;
+        }
+
+        for (let i = 0; i < numStars; i++) {
+            createStar();
+        }
+
+        const quotes = [
+            {quote: "Programming is pressing the buttons in the correct order until the computer does some thing", name: "Marco Gomez (Father)", date: "04/12/2024"},
+            {quote: "Make statues of me please", name: "Marco A. Gomez (Son)", date: "04/12/2024"},
+        ];
+
+        const length = quotes.length;
+        const day = Math.floor((new Date()).getTime() / (1000 * 60 * 60 * 24));
+        const picker = day % length
+        console.log(picker)
+
+        const quoteElement = document.getElementById("quote")
+        quoteElement.innerHTML = `"${quotes[picker].quote}",`
+
+        const infoElement = document.getElementById("info")
+        infoElement.innerHTML = `${quotes[picker].name}, ${quotes[picker].date}.`
+
+    </script>
+</body>
+</html>
